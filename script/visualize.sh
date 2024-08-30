@@ -1,13 +1,13 @@
 #!/bin/bash
 
-DatasetPath=DATAROOT
-Seq=08
-DataConfig=./config/labels/semantic-kitti-mos.raw.yaml
-Version=fuse # Version in ["moving", "movable", "fuse"] for predictions
-#PredictionPath=./log/valid/predictions
+dataset_path=dataroot
+seq=08
+data_config=./config/labels/semantic-kitti-mos.raw.yaml
+version=fuse # version in ["moving", "movable", "fuse"] for predictions
+#predictionpath=./log/valid/predictions
 
-python3 utils/visualize_mos.py -d $DatasetPath \
-                               -s $Seq \
-                               -c $DataConfig \
-                               -v $Version \
-                               # -p $PredictionPath
+python3 utils/visualize_mos.py -d $dataset_path \
+                               -s $seq \
+                               -c $data_config \
+                               -v $version \
+                               # -p $predictionpath

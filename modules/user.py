@@ -29,7 +29,6 @@ class User:
              outputdir,
              modeldir,
              split,
-             bev_res_path: str,
              point_refine=False,
              save_movable=False
     ):
@@ -65,8 +64,7 @@ class User:
                                           batch_size=self.infer_batch_size,
                                           workers=2, # self.arch["train"]["workers"],
                                           gt=True,
-                                          shuffle_train=False,
-                                          bev_res_path=bev_res_path)
+                                          shuffle_train=False)
 
         with torch.no_grad():
             torch.nn.Module.dump_patches = True

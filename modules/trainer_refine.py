@@ -30,9 +30,9 @@ from torchsparse import SparseTensor
 
 
 class TrainerRefine(Trainer):
-    def __init__(self, arch, data, datadir, logdir, bev_res_path, path=None):
+    def __init__(self, arch, data, datadir, logdir, path=None):
 
-        super(TrainerRefine, self).__init__(arch, data, datadir, logdir, path, bev_res_path, point_refine=True)
+        super(TrainerRefine, self).__init__(arch, data, datadir, logdir, path, point_refine=True)
 
         """ New variables for the PointRefine module """
         net_config = {'num_classes': self.parser.get_n_classes(),

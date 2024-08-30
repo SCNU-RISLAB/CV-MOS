@@ -31,7 +31,6 @@ class Trainer:
                  data, 
                  datadir, 
                  logdir,
-                 bev_res_path,
                  path=None, 
                  point_refine=False, 
                  local_rank=0, 
@@ -78,8 +77,7 @@ class Trainer:
                                           batch_size=self.arch["train"]["batch_size"],
                                           workers=self.arch["train"]["workers"],
                                           gt=True,
-                                          shuffle_train=True,
-                                          bev_res_path=bev_res_path)
+                                          shuffle_train=True)
 
         self.set_loss_weight()
 
@@ -162,12 +160,12 @@ class Trainer:
             self.gpu = True
             self.n_gpus = 1
             self.model.cuda()
-
+            
         if torch.cuda.is_available() and torch.cuda.device_count() > 1:
             print(f"Let's use {torch.cuda.device_count()} GPUs!")
             # self.model = nn.DataParallel(self.model)      # spread in gpus
             self.model = convert_model(self.model).cuda() # sync batchnorm
-            self.model = torch.nn.parallel.DistributeddataParallel(self.model,
+            self.model = torch.nn.parallel.DistributedDataParallel(self.model,
                                                                    device_ids=[self.local_rank],
                                                                    output_device=self.local_rank,
                                                                    find_unused_parameters=True,

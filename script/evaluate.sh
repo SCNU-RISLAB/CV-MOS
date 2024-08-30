@@ -1,11 +1,11 @@
 #!/bin/bash
 
-DatasetPath=/data/datasets/dataset/mfmos_data_aug
-PredictionsPath=/data/czy/CV-MOS/log/valid_old
-DataConfig=./config/labels/semantic-kitti-mos.raw.yaml
-SPLIT=valid # valid or test
+dataset_path=/data/datasets/dataset/mfmos_data_aug
+predictions_path=/data/czy/CV-MOS/log/valid_old
+data_config=./config/labels/semantic-kitti-mos.raw.yaml
+split=valid # valid or test
 
-python3 utils/evaluate_mos.py -d $DatasetPath \
-                              -p $PredictionsPath \
-                              -dc $DataConfig \
-                              -s $SPLIT \
+python3 utils/evaluate_mos.py -d $dataset_path \
+                              -p $predictions_path \
+                              -dc $data_config \
+                              -s $split \

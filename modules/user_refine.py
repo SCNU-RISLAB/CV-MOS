@@ -24,10 +24,10 @@ from torchsparse import SparseTensor
 
 
 class UserRefine(User):
-    def __init__(self, arch, data, datadir, outputdir, modeldir, split, bev_res_path: str, save_movable=False):
+    def __init__(self, arch, data, datadir, outputdir, modeldir, split, save_movable=False):
 
         super(UserRefine, self).__init__(arch, data, datadir, outputdir, modeldir, split,
-                                         point_refine=True, save_movable=save_movable, bev_res_path=bev_res_path)
+                                         point_refine=True, save_movable=save_movable)
 
     def infer(self):
         coarse, reproj, refine = [], [], []
