@@ -65,7 +65,7 @@ You can change the number of GPUs as well as ID to suit your needs.
 #### Train 2stage
 Once you have completed the first phase of training above, you can continue with SIEM training to get an improved performance.
 
-Check the path in [train_2stage.sh](./script/train_siem.sh) and run it to train the SIEM **(only available on single GPU)**:
+Check the path in [train_2stage.sh](./script/train_2stage.sh) and run it to train the SIEM **(only available on single GPU)**:
 ```shell
 bash script/train_siem.sh
 ```
