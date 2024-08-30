@@ -1,4 +1,4 @@
-name: mfmos
+name: cvmos
 channels:
   - pytorch
   - defaults
@@ -21,7 +21,6 @@ dependencies:
   - gst-plugins-base=1.14.1=h6a678d5_1
   - gstreamer=1.14.1=h5eee18b_1
   - icu=58.2=he6710b0_3
-  - importlib-metadata=4.11.3=py37h06a4308_0
   - importlib_metadata=4.11.3=hd3eb1b0_0
   - intel-openmp=2021.4.0=h06a4308_3561
   - ipython=7.31.1=py37h06a4308_1
@@ -60,7 +59,6 @@ dependencies:
   - pcre=8.45=h295c915_0
   - pexpect=4.8.0=pyhd3eb1b0_3
   - pickleshare=0.7.5=pyhd3eb1b0_1003
-  - pip=22.3.1=py37h06a4308_0
   - prompt-toolkit=3.0.36=py37h06a4308_0
   - ptyprocess=0.7.0=pyhd3eb1b0_2
   - pygments=2.11.2=pyhd3eb1b0_0
@@ -69,7 +67,6 @@ dependencies:
   - pytorch=1.7.0=py3.7_cuda11.0.221_cudnn8.0.3_0
   - qt=5.9.7=h5867ecd_1
   - readline=8.2=h5eee18b_0
-  - setuptools=65.6.3=py37h06a4308_0
   - sip=4.19.8=py37hf484d3e_0
   - six=1.16.0=pyhd3eb1b0_1
   - sqlite=3.41.2=h5eee18b_0
@@ -79,7 +76,6 @@ dependencies:
   - traitlets=5.7.1=py37h06a4308_0
   - typing_extensions=4.4.0=py37h06a4308_0
   - wcwidth=0.2.5=pyhd3eb1b0_0
-  - wheel=0.38.4=py37h06a4308_0
   - xz=5.4.2=h5eee18b_0
   - zipp=3.11.0=py37h06a4308_0
   - zlib=1.2.13=h5eee18b_0
@@ -90,11 +86,18 @@ dependencies:
     - asttokens==2.2.1
     - astunparse==1.6.3
     - attrs==23.1.0
-    - cachetools==4.2.4
+    - backports-cached-property==1.0.2
+    - blessings==1.7
+    - cachetools==5.4.0
+    - chardet==5.2.0
     - charset-normalizer==3.1.0
     - click==8.1.3
+    - codecov==2.1.13
     - colorama==0.4.6
+    - coloredlogs==15.0.1
+    - colour-runner==0.1.1
     - configargparse==1.5.3
+    - coverage==7.6.1
     - cycler==0.11.0
     - cython==0.29.26
     - dash==2.9.3
@@ -103,10 +106,15 @@ dependencies:
     - dash-table==5.0.0
     - dataclasses==0.6
     - debugpy==1.6.7
+    - deepdiff==7.0.1
+    - distlib==0.3.8
+    - dropblock==0.3.0
     - easydict==1.9
+    - einops==0.6.1
     - entrypoints==0.4
     - executing==1.2.0
     - fastjsonschema==2.16.3
+    - filelock==3.15.4
     - flask==2.2.5
     - flatbuffers==23.5.26
     - fonttools==4.38.0
@@ -119,8 +127,10 @@ dependencies:
     - grpcio==1.54.2
     - h5py==3.8.0
     - hsluv==5.0.3
+    - humanfriendly==10.0
     - icecream==2.1.3
     - idna==3.4
+    - importlib-metadata==8.2.0
     - importlib-resources==5.12.0
     - ipykernel==6.16.2
     - ipywidgets==8.0.6
@@ -146,16 +156,22 @@ dependencies:
     - opencv-contrib-python==4.5.1.48
     - opencv-python==4.5.1.48
     - opt-einsum==3.3.0
+    - ordered-set==4.1.0
     - packaging==23.1
     - pandas==1.3.5
     - pillow==9.5.0
+    - pip==24.0
     - pkgutil-resolve-name==1.3.10
+    - platformdirs==4.2.2
     - plotly==5.14.1
+    - pluggy==1.5.0
     - protobuf==3.19.6
     - psutil==5.9.5
     - pyasn1==0.5.0
     - pyasn1-modules==0.3.0
     - pyparsing==3.0.9
+    - pyproject==1.3.1
+    - pyproject-api==1.7.1
     - pyquaternion==0.9.9
     - pyrsistent==0.19.3
     - python-dateutil==2.8.2
@@ -164,9 +180,12 @@ dependencies:
     - pyzmq==25.0.2
     - requests==2.30.0
     - requests-oauthlib==1.3.1
+    - rootpath==0.1.1
     - rsa==4.9
     - scikit-learn==0.24.2
     - scipy==1.7.3
+    - setuptools==68.0.0
+    - softpool==1.1
     - strictyaml==1.4.4
     - tenacity==8.2.2
     - tensorboard==2.11.2
@@ -178,11 +197,20 @@ dependencies:
     - tensorflow-io-gcs-filesystem==0.33.0
     - termcolor==2.3.0
     - threadpoolctl==3.1.0
+    - tomli==2.0.1
+    - torch-scatter==2.0.6
     - torchinfo==1.7.2
+    - torchsparse==1.4.0
+    - torchstat==0.0.7
+    - torchsummary==1.5.1
     - tornado==6.2
+    - tox==4.17.1
     - tqdm==4.65.0
     - urllib3==2.0.2
+    - virtualenv==20.26.3
     - vispy==0.7.0
     - werkzeug==2.2.3
+    - wheel==0.42.0
     - widgetsnbextension==4.0.7
     - wrapt==1.15.0
+prefix: /home/zeyu/anaconda3/envs/cvmos
