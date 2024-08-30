@@ -1,16 +1,13 @@
 # CV-MOS: A Cross-View Model for Motion Segmentation
 
-**🎉MF-MOS achieved a leading IoU of **_76.7%_** on [the MOS leaderboard of the SemanticKITTI](https://codalab.lisn.upsaclay.fr/competitions/7088) upon submission, demonstrating the current SOTA performance.**
-![Leaderboard](./assets/Leaderboard.jpg)
-
 ## 📖How to use
 ### 📦pretrained model
-Our pretrained model (best in validation, with the IoU of **_76.12%_**) can be downloaded from [Google Drive](https://drive.google.com/file/d/1KGPwMr9v9GWdIB0zEGAJ8Wi0k3dvXbZt/view?usp=sharing)
+Our pretrained model (best in validation, with the IoU of **_77.5%_**) can be downloaded from [Google Drive](https://drive.google.com/file/d/1KGPwMr9v9GWdIB0zEGAJ8Wi0k3dvXbZt/view?usp=sharing)
 ### 📚Dataset 
 Download SemanticKITTI dataset from [SemanticKITTI](http://www.semantic-kitti.org/dataset.html#download) (including **Velodyne point clouds**, **calibration data** and **label data**).
 #### Preprocessing
 After downloading the dataset, the residual maps as the input of the model during training need to be generated.
-Run [auto_gen_residual_images.py](./utils/auto_gen_residual_images.py) or [auto_gen_residual_images_mp.py](./utils/auto_gen_residual_images_mp.py)(with multiprocess),
+Run [auto_gen_residual_images.py](./utils/auto_gen_residual_images.py) or [auto_gen_residual_images_mp.py](./utils/auto_gen_residual_images_mp.py)(with multiprocess) and [auto_gen_polar_sequential_residual_images.py](./bev_utils/generate_residual/utils/auto_gen_polar_sequential_residual_images.py),
 and check that the path is correct before running.
 
 The structure of one of the folders in the entire dataset is as follows:
@@ -22,6 +19,7 @@ DATAROOT
     │   ├── calib.txt
     │   ├── times.txt
     │   ├── labels
+    │   ├── residual_images(the bev residual images)
     │   ├── residual_images_1
     │   ├── residual_images_10
     │   ├── residual_images_11
@@ -49,25 +47,25 @@ Our environment: Ubuntu 18.04, CUDA 11.2
 Use conda to create the conda environment and activate it:
 ```shell
 conda env create -f environment.yml
-conda activate mfmos
+conda activate cvmos
 ```
 #### TorchSparse
-Install torchsparse which is used in [SIEM](./modules/PointRefine/spvcnn.py) using the commands:
+Install torchsparse which is used in [2stage](./modules/PointRefine/spvcnn.py) using the commands:
 ```shell
 sudo apt install libsparsehash-dev 
 pip install --upgrade git+https://github.com/mit-han-lab/torchsparse.git@v1.4.0
 ```
 
-### 📈Training
+### 📈Train 1stage
 Check the path in [dist_train.sh](./script/dist_train.sh), and run it to train:
 ```shell
 bash script/dist_train.sh
 ```
 You can change the number of GPUs as well as ID to suit your needs.
-#### Train the SIEM
+#### Train 2stage
 Once you have completed the first phase of training above, you can continue with SIEM training to get an improved performance.
 
-Check the path in [train_siem.sh](./script/train_siem.sh) and run it to train the SIEM **(only available on single GPU)**:
+Check the path in [train_2stage.sh](./script/train_siem.sh) and run it to train the SIEM **(only available on single GPU)**:
 ```shell
 bash script/train_siem.sh
 ```
