@@ -7,6 +7,13 @@
   </div>
 </div>
 
+<p align="center">
+<img src="./assets/Demo.gif" width="90%">
+</p>
+<b><p align="center" style="margin-top: -20px;">
+Video demo
+</b></p>
+
 ## 📖How to use
 ### 📦pretrained model
 Our pretrained model (validation with the IoU of **_77.5%_**, test with the IoU of **_79.2%_**) can be downloaded from [Google Drive](https://drive.google.com/drive/folders/1FURxrcwXTilTxCkn6uky9sutAKG-Nq1_?usp=sharing)
