@@ -1,5 +1,12 @@
 # [TIM2024]CV-MOS: A Cross-View Model for Motion Segmentation
 
+<div align="center">
+<div>
+    <a href="http://arxiv.org/abs/2408.13790"><img src="http://img.shields.io/badge/paper-arXiv.cs.CV%3A2401.17023-B31B1B.svg"></a>
+    <a href="https://www.bilibili.com/video/BV1ZM411Z7rP/?share_source=copy_web&vd_source=902841b9751bc137897f677e1ea56624"><img src="http://img.shields.io/badge/video-bilibili%3AMF--MOS-FF6699.svg"></a>
+  </div>
+</div>
+
 ## 📖How to use
 ### 📦pretrained model
 Our pretrained model (validation with the IoU of **_77.5%_**, test with the IoU of **_79.2%_**) can be downloaded from [Google Drive](https://drive.google.com/drive/folders/1FURxrcwXTilTxCkn6uky9sutAKG-Nq1_?usp=sharing)
