@@ -97,4 +97,4 @@ Check the path in [viz_seqVideo.py](./utils/viz_seqVideo.py), and run it to visu
 
 
 ## 👏Acknowledgment
-This repo is based on MotionSeg3D, LMNet... We are very grateful for their excellent work.
+This repo is based on MF-MOS, MotionBEV, GFNet... We are very grateful for their excellent work.
