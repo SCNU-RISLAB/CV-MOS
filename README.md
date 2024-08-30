@@ -1,4 +1,4 @@
-# CV-MOS: A Cross-View Model for Motion Segmentation
+# [TIM2024]CV-MOS: A Cross-View Model for Motion Segmentation
 
 ## 📖How to use
 ### 📦pretrained model
