@@ -9,7 +9,7 @@ num_last_n: 4
 scan_folder: '/data/2022/zeyu/kitti_dataset/'
 
 # Outputs
-residual_image_folder: '/data/2022/zeyu/kitti_dataset/motionbev_residual/'
+residual_image_folder: '/data/2022/zeyu/kitti_dataset/'
 
 occlusion_block: True
 
