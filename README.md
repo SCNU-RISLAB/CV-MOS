@@ -2,7 +2,7 @@
 
 ## 📖How to use
 ### 📦pretrained model
-Our pretrained model (best in validation, with the IoU of **_77.5%_**) can be downloaded from [Google Drive](https://drive.google.com/drive/folders/1FURxrcwXTilTxCkn6uky9sutAKG-Nq1_?usp=sharing)
+Our pretrained model (validation with the IoU of **_77.5%_**, test with the IoU of **_79.2%_**) can be downloaded from [Google Drive](https://drive.google.com/drive/folders/1FURxrcwXTilTxCkn6uky9sutAKG-Nq1_?usp=sharing)
 ### 📚Dataset 
 Download SemanticKITTI dataset from [SemanticKITTI](http://www.semantic-kitti.org/dataset.html#download) (including **Velodyne point clouds**, **calibration data** and **label data**).
 #### Preprocessing
