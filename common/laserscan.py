@@ -134,6 +134,7 @@ class LaserScan:
             self.points = self.points @ R.random(random_state=1234).as_dcm().T
         if remissions is not None:
             self.remissions = remissions  # get remission
+            #self.remissions = (remissions - remissions.min()) / (remissions.max() - remissions.min())
             #if self.DA:
             #    self.remissions = self.remissions[::-1].copy()
         else:
@@ -334,11 +335,11 @@ class SemLaserScan(LaserScan):
         # projection color with semantic labels
         self.proj_sem_label = np.zeros((self.proj_H, self.proj_W), dtype=np.int32)  # [H,W]  label
         self.proj_sem_movable_label = np.zeros((self.proj_H, self.proj_W), dtype=np.int32)  # [H,W]  label
-        self.proj_sem_color = np.zeros((self.proj_H, self.proj_W, 3), dtype=np.float)  # [H,W,3] color
+        self.proj_sem_color = np.zeros((self.proj_H, self.proj_W, 3), dtype=np.float32)  # [H,W,3] color
 
         # projection color with instance labels
         self.proj_inst_label = np.zeros((self.proj_H, self.proj_W), dtype=np.int32)  # [H,W]  label
-        self.proj_inst_color = np.zeros((self.proj_H, self.proj_W, 3), dtype=np.float)  # [H,W,3] color
+        self.proj_inst_color = np.zeros((self.proj_H, self.proj_W, 3), dtype=np.float32)  # [H,W,3] color
 
     def open_label(self, filename):
         """ Open raw scan and fill in attributes """

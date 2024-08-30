@@ -93,12 +93,13 @@ class SemanticKitti(Dataset):
                  learning_map_inv,    # inverse of previous (recover labels)
                  movable_learning_map_inv,
                  sensor,              # sensor to parse scans from
+                 bev_res_path: str,
                  valid_residual_delta_t=1,  # modulation interval in data augmentation fro residual maps
                  max_points=150000,   # max number of points present in dataset
                  gt=True,             # send ground truth?
                  transform=False,
                  drop_few_static_frames=False,
-                 bev_residual_path: Optional[str] = r"/data/2022/zeyu/kitti_dataset/motionbev_residual/"
+
     ):
         # save deats
         self.root = os.path.join(root, "sequences")
@@ -252,7 +253,7 @@ class SemanticKitti(Dataset):
             ###################################### bev residual data ########################################
             bev_residual_files = []
             bev_residual_files += absoluteFilePaths('/'.join(
-                [bev_residual_path, str(seq).zfill(2), 'residual_images']))  # residual_images_4  residual_images
+                [bev_res_path, str(seq).zfill(2), 'residual_images']))  # residual_images_4  residual_images
             bev_residual_files.sort()
             self.bev_residual_files[seq] = bev_residual_files
 
@@ -316,7 +317,15 @@ class SemanticKitti(Dataset):
                             flip_sign = True
                     if random.random() > 0.5:
                             rot = True
-                    drop_points = random.uniform(0, 0.5)
+                    # drop_points = random.uniform(0, 0.5)
+
+            ##################### bev residual data #############################################
+            try:
+                bev_residual_data = np.load(self.bev_residual_files[seq][index])
+            except ValueError or IndexError as e:
+                print("*" * 50)
+                print(seq, index)
+                raise e
 
             if self.gt:
                 scan = SemLaserScan(self.color_map,
@@ -328,7 +337,8 @@ class SemanticKitti(Dataset):
                                     DA=DA,
                                     flip_sign=flip_sign,
                                     drop_points=drop_points,
-                                    use_normal=self.use_normal)
+                                    use_normal=self.use_normal,
+                                    )
             else:
                 scan = LaserScan(project=True,
                                  H=self.sensor_img_H,
@@ -399,13 +409,6 @@ class SemanticKitti(Dataset):
             proj_full = torch.cat([proj_full, proj])
             range_pixel2point = torch.from_numpy(scan.proj_idx).clone()
 
-            ##################### bev residual data #############################################
-            try:
-                bev_residual_data = np.load(self.bev_residual_files[seq][index])
-            except ValueError:
-                print("*" * 50)
-                print(seq, index)
-                raise ValueError
             polar_data, polar_point2pixel = self.polar_dataset(scan.points, label_file, residual_data=bev_residual_data)
 
             p2r_flow_matrix = self.p2r_flow_matrix(range_pixel2point, polar_point2pixel)
@@ -556,6 +559,7 @@ class SemanticKitti(Dataset):
         xyz = scan[:, 0:3]  # get xyz
         # remissions = np.squeeze(remissions)
         num_pt = xyz.shape[0]
+        # num_pt = residual_data.shape[0]
         # residual_data = np.load(self.residual_files[index])
 
         if self.gt:
@@ -584,7 +588,7 @@ class SemanticKitti(Dataset):
         cur_grid_size = np.array(grid_size)
         intervals = crop_range / (cur_grid_size - 1)
 
-        grid_ind = (np.floor((np.clip(xyz_pol, min_bound, max_bound) - min_bound) / intervals)).astype(np.int)
+        grid_ind = (np.floor((np.clip(xyz_pol, min_bound, max_bound) - min_bound) / intervals)).astype(np.int64)
         pxpypz = (np.clip(xyz_pol, min_bound, max_bound) - min_bound) / crop_range  # 坐标归一化到0-1
         pxpypz = 2 * (pxpypz - 0.5)  # 归一化后的极坐标 范围为(-1, 1)，到时F.grid_simple采样的时候使用
 
@@ -635,7 +639,6 @@ class Parser:
                  workers,           # threads to load data
                  valid_residual_delta_t=1,  # modulation interval in data augmentation fro residual maps
                  gt=True,           # get gt?
-                 debug: bool = False,
                  shuffle_train=False):  # shuffle training set?
         super(Parser, self).__init__()
 
@@ -659,6 +662,7 @@ class Parser:
         self.workers = workers
         self.gt = gt
         self.shuffle_train = shuffle_train
+        bev_res_path = os.path.join(root, "sequences")
 
         # number of classes that matters is the one for xentropy
         self.nclasses = len(self.learning_map_inv)
@@ -680,10 +684,11 @@ class Parser:
                                                max_points=max_points,
                                                transform=True,
                                                gt=self.gt,
-                                               drop_few_static_frames=True)
+                                               drop_few_static_frames=True,
+                                               bev_res_path=bev_res_path)
 
             shuffle_train = True
-            if torch.cuda.is_available() and torch.cuda.device_count() < 2 or debug:
+            if torch.cuda.is_available() and torch.cuda.device_count() < 2:
                 self.train_sampler = None
             else:
                 self.train_sampler = torch.utils.data.distributed.DistributedSampler(self.train_dataset)
@@ -718,7 +723,8 @@ class Parser:
                                                movable_learning_map_inv=self.movable_learning_map_inv,
                                                sensor=self.sensor,
                                                max_points=max_points,
-                                               gt=self.gt)
+                                               gt=self.gt,
+                                               bev_res_path=bev_res_path)
 
             self.validloader = torch.utils.data.DataLoader(self.valid_dataset,
                                                            batch_size=self.batch_size,
@@ -742,7 +748,8 @@ class Parser:
                                                movable_learning_map_inv=self.movable_learning_map_inv,
                                                sensor=self.sensor,
                                                max_points=max_points,
-                                               gt=self.gt)
+                                               gt=self.gt,
+                                               bev_res_path=bev_res_path)
 
             self.validloader = torch.utils.data.DataLoader(self.valid_dataset,
                                                            batch_size=self.batch_size,
@@ -767,7 +774,8 @@ class Parser:
                                                   movable_learning_map_inv=self.movable_learning_map_inv,
                                                   sensor=self.sensor,
                                                   max_points=max_points,
-                                                  gt=False)
+                                                  gt=False,
+                                                  bev_res_path=bev_res_path)
 
                 self.testloader = torch.utils.data.DataLoader(self.test_dataset,
                                                               batch_size=self.batch_size,
