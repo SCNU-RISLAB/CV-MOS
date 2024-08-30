@@ -97,7 +97,7 @@ bash script/visualize.sh
 If -p is empty: only ground truth will be visualized.
 
 If -p set the path of predictions: both ground truth and predictions will be visualized.
-![Single frame visualization](./assets/VisualizeSingleFrame.jpg)
+![Single frame visualization]
 #### Get the sequences video
 Check the path in [viz_seqVideo.py](./utils/viz_seqVideo.py), and run it to visualize the entire sequence in the form of a video.
 
