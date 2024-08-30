@@ -35,10 +35,10 @@ if __name__ == '__main__':
     FLAGS.log = os.path.join(FLAGS.log, datetime.now().strftime("%Y-%-m-%d-%H:%M") + FLAGS.name)
     
     # open arch / data config file
-    ARCH = load_yaml(FLAGS.arch_cfg)
-    DATA = load_yaml(FLAGS.data_cfg)
+    arch = load_yaml(FLAGS.arch_cfg)
+    data= load_yaml(FLAGS.data_cfg)
     
-    # params = SalsaNextWithMotionAttention(nclasses=3, params=ARCH)
+    # params = SalsaNextWithMotionAttention(nclasses=3, params=arch)
     # pytorch_total_params = sum(p.numel() for p in params.parameters() if p.requires_grad)
     # del params
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     set_seed()
     # create trainer and start the training
-    trainer = TrainerRefine(ARCH, DATA, FLAGS.dataset, FLAGS.log, FLAGS.pretrained)
+    trainer = TrainerRefine(arch, data, FLAGS.dataset, FLAGS.log, FLAGS.pretrained)
 
     print("----------")
     print("INTERFACE:")
@@ -57,8 +57,8 @@ if __name__ == '__main__':
     print("  data_cfg:", FLAGS.data_cfg)
     print("  log:", FLAGS.log)
     print("  pretrained:", FLAGS.pretrained)
-    print("  Augmentation for residual: {}, interval in validation: {}".format(ARCH["train"]["residual_aug"],
-                                                                               ARCH["train"]["valid_residual_delta_t"]))
+    print("  Augmentation for residual: {}, interval in validation: {}".format(arch["train"]["residual_aug"],
+                                                                               arch["train"]["valid_residual_delta_t"]))
     print("----------\n")
 
     trainer.train()

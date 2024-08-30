@@ -22,17 +22,17 @@ if __name__ == '__main__':
     print("----------\n")
 
     # open arch / data config file
-    ARCH = load_yaml(FLAGS.model + "/arch_cfg.yaml")
-    DATA = load_yaml(FLAGS.model + "/data_cfg.yaml")
+    arch = load_yaml(FLAGS.model + "/arch_cfg.yaml")
+    data = load_yaml(FLAGS.model + "/data_cfg.yaml")
 
-    make_predictions_dir(FLAGS, DATA, save_movable=FLAGS.movable) # create predictions file folder
+    make_predictions_dir(FLAGS, data, save_movable=FLAGS.movable) # create predictions file folder
     check_model_dir(FLAGS.model)      # does model folder exist?
 
     # create user and infer dataset
     if not FLAGS.pointrefine:
-        user = User(ARCH, DATA, datadir=FLAGS.dataset, outputdir=FLAGS.log,
+        user = User(arch, data, datadir=FLAGS.dataset, outputdir=FLAGS.log,
                     modeldir=FLAGS.model, split=FLAGS.split, save_movable=FLAGS.movable)
     else:
-        user = UserRefine(ARCH, DATA, datadir=FLAGS.dataset, outputdir=FLAGS.log,
+        user = UserRefine(arch, data, datadir=FLAGS.dataset, outputdir=FLAGS.log,
                           modeldir=FLAGS.model, split=FLAGS.split, save_movable=FLAGS.movable)
     user.infer()

@@ -1,24 +1,19 @@
 #!/usr/bin/env python3
 # This file is covered by the LICENSE file in the root of this project.
 import os
-# import os
-# os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 import torch
 print("device count: ", torch.cuda.device_count())
 from torch import distributed as dist
 
-debug = False
-if not debug:
-    dist.init_process_group(backend="nccl")
-    print("world_size: ", dist.get_world_size())
+dist.init_process_group(backend="nccl")
+print("world_size: ", dist.get_world_size())
 
 
 import random
 import numpy as np
 
 from modules.trainer import Trainer
-# from modules.SalsaNextWithMotionAttention import *
-from modules.MFMOS import *
+from modules.CVMOS import *
 
 def set_seed(seed=1024):
     random.seed(seed)
@@ -27,14 +22,6 @@ def set_seed(seed=1024):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed) # if you are using multi-GPU.
-
-    # torch.backends.cudnn.benchmark = False
-    # torch.backends.cudnn.deterministic = True
-    # torch.backends.cudnn.enabled = False
-    # If we need to reproduce the results, increase the training speed
-    #    set benchmark = False
-    # If we don’t need to reproduce the results, improve the network performance as much as possible
-    #    set benchmark = True
 
 
 if __name__ == '__main__':
@@ -46,10 +33,10 @@ if __name__ == '__main__':
     FLAGS.log = os.path.join(FLAGS.log, datetime.now().strftime("%Y-%-m-%d-%H:%M") + FLAGS.name)
     print(FLAGS.log)
     # open arch / data config file
-    ARCH = load_yaml(FLAGS.arch_cfg)
-    DATA = load_yaml(FLAGS.data_cfg)
+    arch = load_yaml(FLAGS.arch_cfg)
+    data = load_yaml(FLAGS.data_cfg)
 
-    params = MFMOS(nclasses=3, params=ARCH, movable_nclasses=3)
+    params = CVMOS(nclasses=3, params=arch, movable_nclasses=3)
     pytorch_total_params = sum(p.numel() for p in params.parameters() if p.requires_grad)
     del params
 
@@ -60,7 +47,13 @@ if __name__ == '__main__':
 
     set_seed()
     # create trainer and start the training
-    trainer = Trainer(ARCH, DATA, FLAGS.dataset, FLAGS.log, FLAGS.pretrained, local_rank=local_rank, debug=debug)
+    trainer = Trainer(arch, 
+                      data, 
+                      FLAGS.dataset, 
+                      FLAGS.log,
+                      FLAGS.pretrained,
+                      local_rank=local_rank, 
+                      )
 
     if local_rank == 0:
         print("----------")
@@ -71,8 +64,8 @@ if __name__ == '__main__':
         print("  Total of Trainable Parameters: {}".format(millify(pytorch_total_params, 2)))
         print("  log:", FLAGS.log)
         print("  pretrained:", FLAGS.pretrained)
-        print("  Augmentation for residual: {}, interval in validation: {}".format(ARCH["train"]["residual_aug"],
-                                                                                   ARCH["train"]["valid_residual_delta_t"]))
+        print("  Augmentation for residual: {}, interval in validation: {}".format(arch["train"]["residual_aug"],
+                                                                                   arch["train"]["valid_residual_delta_t"]))
         print("----------\n")
 
     trainer.train()
