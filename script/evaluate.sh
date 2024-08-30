@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DatasetPath=/data/2022/mos-dataset/Apollo
-PredictionsPath=/data/2022/zeyu/CV-MOS-apollo/log/apollo_finetune2stage
-DataConfig=./config/labels/apollo.yaml
+DatasetPath=/data/datasets/dataset/mfmos_data_aug
+PredictionsPath=/data/czy/CV-MOS/log/valid_old
+DataConfig=./config/labels/semantic-kitti-mos.raw.yaml
 SPLIT=valid # valid or test
 
 python3 utils/evaluate_mos.py -d $DatasetPath \
