@@ -317,7 +317,7 @@ class SemanticKitti(Dataset):
                             flip_sign = True
                     if random.random() > 0.5:
                             rot = True
-                    # drop_points = random.uniform(0, 0.5)
+                    drop_points = random.uniform(0, 0.5)
 
             ##################### bev residual data #############################################
             try:
